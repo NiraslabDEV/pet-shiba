@@ -71,6 +71,9 @@
           <a href="#contato" class="hover:text-secondary transition-colors"
             >Contato</a
           >
+          <a href="#proposta" class="hover:text-secondary transition-colors"
+            >Proposta</a
+          >
         </nav>
         <button class="md:hidden text-white">
           <svg
@@ -142,10 +145,9 @@
 
             <div class="hero-cta">
               <a
-                href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20para%20meu%20pet."
+                href="#agendamento"
                 class="neon-button neon-button-hero"
                 data-tracking="btn-agende-banner"
-                target="_blank"
                 >Agende Agora</a
               >
             </div>
@@ -309,10 +311,10 @@
                 <span class="text-secondary font-bold">R$ 60,00</span>
               </div>
               <a
-                href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20agendar%20um%20banho%20terapêutico%20para%20meu%20pet."
+                href="#agendamento"
                 class="neon-button w-full text-center"
                 data-tracking="btn-banho-terapeutico"
-                target="_blank"
+                data-service="Banho Terapêutico"
                 >Agendar</a
               >
             </div>
@@ -352,10 +354,10 @@
                 <span class="text-secondary font-bold">R$ 85,00</span>
               </div>
               <a
-                href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20agendar%20uma%20tosa%20especializada%20para%20meu%20pet."
+                href="#agendamento"
                 class="neon-button w-full text-center"
                 data-tracking="btn-tosa-especializada"
-                target="_blank"
+                data-service="Tosa na Tesoura"
                 >Agendar</a
               >
             </div>
@@ -395,10 +397,10 @@
                 <span class="text-secondary font-bold">R$ 70,00</span>
               </div>
               <a
-                href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20agendar%20uma%20hidratação%20e%20tratamento%20capilar%20para%20meu%20pet."
+                href="#agendamento"
                 class="neon-button w-full text-center"
                 data-tracking="btn-hidratacao"
-                target="_blank"
+                data-service="Hidratação"
                 >Agendar</a
               >
             </div>
@@ -434,10 +436,10 @@
                 <span class="text-secondary font-bold">R$ 120,00</span>
               </div>
               <a
-                href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20agendar%20um%20Spa%20Day%20completo%20para%20meu%20pet."
+                href="#agendamento"
                 class="neon-button w-full text-center"
                 data-tracking="btn-spa-day"
-                target="_blank"
+                data-service="Spa Day Completo"
                 >Agendar</a
               >
             </div>
@@ -473,10 +475,10 @@
                 <span class="text-secondary font-bold">R$ 45,00</span>
               </div>
               <a
-                href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20agendar%20cuidados%20especiais%20para%20meu%20pet."
+                href="#agendamento"
                 class="neon-button w-full text-center"
                 data-tracking="btn-cuidados-especiais"
-                target="_blank"
+                data-service="Cuidados Especiais"
                 >Agendar</a
               >
             </div>
@@ -513,10 +515,9 @@
                 <span class="text-secondary font-bold">R$ 30,00</span>
               </div>
               <a
-                href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20contratar%20o%20serviço%20de%20Taxi%20Dog%20Premium."
+                href="#agendamento"
                 class="neon-button w-full text-center"
                 data-tracking="btn-taxi-dog"
-                target="_blank"
                 >Agendar</a
               >
             </div>
@@ -585,197 +586,316 @@
         </div>
       </section>
 
-      <!-- Formulário de Agendamento Melhorado -->
+      <!-- Formulário de Agendamento Modernizado -->
       <section id="agendamento" class="py-16 relative">
         <div class="container mx-auto px-4">
           <div
-            class="glass-container p-8 rounded-xl max-w-3xl mx-auto relative overflow-hidden"
+            class="glass-container p-8 md:p-10 rounded-xl max-w-3xl mx-auto relative overflow-hidden"
           >
+            <!-- Efeitos de fundo modernos -->
             <div class="pulse-border"></div>
-            <h2 class="text-4xl font-bold mb-2 text-center neon-text-large">
-              Agende um Serviço Premium
-            </h2>
-            <div class="flex justify-center mb-6">
-              <div class="h-1 w-24 bg-secondary rounded-full"></div>
-            </div>
-            <p class="text-center text-xl mb-8">
-              Escolha o melhor tratamento para seu pet e deixe-nos cuidar dele
-              com
-              <span class="text-secondary font-bold"
-                >todo o carinho que ele merece</span
-              >
-            </p>
+            <div class="cyber-grid absolute inset-0 z-0 opacity-10"></div>
+            <div class="tech-accent tech-accent-1"></div>
+            <div class="tech-accent tech-accent-2"></div>
 
-            <div id="agendamento-form" class="space-y-8">
-              <div class="step" data-step="1">
-                <h3 class="text-xl mb-4 neon-text">
-                  Qual serviço deseja para seu pet?
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <button
-                    class="service-btn glass-button"
-                    data-service="Banho Terapêutico"
-                    data-tracking="form-banho"
+            <!-- Conteúdo principal -->
+            <div class="relative z-10">
+              <div class="text-center mb-8">
+                <div class="inline-block relative">
+                  <span
+                    class="absolute -inset-1 blur-xl bg-gradient-to-r from-purple-600 to-secondary opacity-30 rounded-full"
+                  ></span>
+                  <h2
+                    class="text-4xl font-bold mb-2 text-center neon-text-large relative"
                   >
-                    <span class="block text-2xl mb-1">🛁</span>
-                    Banho Terapêutico
-                  </button>
-                  <button
-                    class="service-btn glass-button"
-                    data-service="Tosa na Máquina"
-                    data-tracking="form-tosa-maquina"
-                  >
-                    <span class="block text-2xl mb-1">✂️</span>
-                    Tosa na Máquina
-                  </button>
-                  <button
-                    class="service-btn glass-button"
-                    data-service="Tosa na Tesoura"
-                    data-tracking="form-tosa-tesoura"
-                  >
-                    <span class="block text-2xl mb-1">✂️</span>
-                    Tosa na Tesoura
-                  </button>
-                  <button
-                    class="service-btn glass-button"
-                    data-service="Hidratação"
-                    data-tracking="form-hidratacao"
-                  >
-                    <span class="block text-2xl mb-1">💧</span>
-                    Hidratação
-                  </button>
-                  <button
-                    class="service-btn glass-button"
-                    data-service="Spa Day Completo"
-                    data-tracking="form-spa"
-                  >
-                    <span class="block text-2xl mb-1">✨</span>
-                    Spa Day Completo
-                  </button>
-                  <button
-                    class="service-btn glass-button"
-                    data-service="Taxi Dog"
-                    data-tracking="form-taxi"
-                  >
-                    <span class="block text-2xl mb-1">🚗</span>
-                    Taxi Dog
-                  </button>
+                    Agende um Serviço Premium
+                  </h2>
                 </div>
+                <div class="flex justify-center mb-6">
+                  <div
+                    class="h-1 w-24 bg-gradient-to-r from-purple-500 to-secondary rounded-full"
+                  ></div>
+                </div>
+                <p class="text-center text-xl mb-8">
+                  Escolha o melhor tratamento para seu pet e deixe-nos cuidar
+                  dele com
+                  <span class="text-secondary font-bold glow-text"
+                    >todo o carinho que ele merece</span
+                  >
+                </p>
               </div>
 
-              <div class="step hidden" data-step="2">
-                <h3 class="text-xl mb-4 neon-text">Qual o porte do seu pet?</h3>
-                <div class="grid grid-cols-2 gap-6">
-                  <button
-                    class="size-btn glass-button"
-                    data-size="Pequeno"
-                    data-tracking="form-pequeno"
-                  >
-                    <span class="block text-2xl mb-1">🐕‍</span>
-                    Pequeno <span class="text-sm">(até 10kg)</span>
-                  </button>
-                  <button
-                    class="size-btn glass-button"
-                    data-size="Médio"
-                    data-tracking="form-medio"
-                  >
-                    <span class="block text-2xl mb-1">🐕</span>
-                    Médio <span class="text-sm">(10-25kg)</span>
-                  </button>
-                  <button
-                    class="size-btn glass-button"
-                    data-size="Grande"
-                    data-tracking="form-grande"
-                  >
-                    <span class="block text-2xl mb-1">🐕‍</span>
-                    Grande <span class="text-sm">(25-45kg)</span>
-                  </button>
-                  <button
-                    class="size-btn glass-button"
-                    data-size="Gigante"
-                    data-tracking="form-gigante"
-                  >
-                    <span class="block text-2xl mb-1">🐕‍</span>
-                    Gigante <span class="text-sm">(acima 45kg)</span>
-                  </button>
+              <div id="agendamento-form" class="space-y-8">
+                <div class="step" data-step="1">
+                  <h3 class="text-xl mb-4 neon-text flex items-center">
+                    <span class="cyber-badge mr-2">01</span>
+                    Qual serviço deseja para seu pet?
+                  </h3>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <button
+                      class="service-btn modern-card-button"
+                      data-service="Banho Terapêutico"
+                      data-tracking="form-banho"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">🛁</span>
+                      </div>
+                      <span class="service-name">Banho Terapêutico</span>
+                    </button>
+                    <button
+                      class="service-btn modern-card-button"
+                      data-service="Tosa na Máquina"
+                      data-tracking="form-tosa-maquina"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">✂️</span>
+                      </div>
+                      <span class="service-name">Tosa na Máquina</span>
+                    </button>
+                    <button
+                      class="service-btn modern-card-button"
+                      data-service="Tosa na Tesoura"
+                      data-tracking="form-tosa-tesoura"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">✂️</span>
+                      </div>
+                      <span class="service-name">Tosa na Tesoura</span>
+                    </button>
+                    <button
+                      class="service-btn modern-card-button"
+                      data-service="Hidratação"
+                      data-tracking="form-hidratacao"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">💧</span>
+                      </div>
+                      <span class="service-name">Hidratação</span>
+                    </button>
+                    <button
+                      class="service-btn modern-card-button"
+                      data-service="Spa Day Completo"
+                      data-tracking="form-spa"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">✨</span>
+                      </div>
+                      <span class="service-name">Spa Day Completo</span>
+                    </button>
+                    <button
+                      class="service-btn modern-card-button"
+                      data-service="Taxi Dog"
+                      data-tracking="form-taxi"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">🚗</span>
+                      </div>
+                      <span class="service-name">Taxi Dog</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div class="step hidden" data-step="3">
-                <h3 class="text-xl mb-6 neon-text">Informações do seu pet</h3>
-                <div class="space-y-6">
-                  <div class="glass-input-container">
-                    <label class="block mb-2">Nome do Pet</label>
-                    <input
-                      type="text"
-                      id="pet-name"
-                      placeholder="Digite o nome do seu pet"
-                      class="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-secondary outline-none"
-                      data-tracking="form-nome"
-                    />
+                <div class="step hidden" data-step="2">
+                  <h3 class="text-xl mb-4 neon-text flex items-center">
+                    <span class="cyber-badge mr-2">02</span>
+                    Qual o porte do seu pet?
+                  </h3>
+                  <div class="grid grid-cols-2 gap-6">
+                    <button
+                      class="size-btn modern-card-button"
+                      data-size="Pequeno"
+                      data-tracking="form-pequeno"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">🐕‍</span>
+                      </div>
+                      <span class="service-name"
+                        >Pequeno <span class="text-sm">(até 10kg)</span></span
+                      >
+                    </button>
+                    <button
+                      class="size-btn modern-card-button"
+                      data-size="Médio"
+                      data-tracking="form-medio"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">🐕</span>
+                      </div>
+                      <span class="service-name"
+                        >Médio <span class="text-sm">(10-25kg)</span></span
+                      >
+                    </button>
+                    <button
+                      class="size-btn modern-card-button"
+                      data-size="Grande"
+                      data-tracking="form-grande"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">🐕‍</span>
+                      </div>
+                      <span class="service-name"
+                        >Grande <span class="text-sm">(25-45kg)</span></span
+                      >
+                    </button>
+                    <button
+                      class="size-btn modern-card-button"
+                      data-size="Gigante"
+                      data-tracking="form-gigante"
+                    >
+                      <div class="icon-container">
+                        <span class="text-2xl">🐕‍</span>
+                      </div>
+                      <span class="service-name"
+                        >Gigante <span class="text-sm">(acima 45kg)</span></span
+                      >
+                    </button>
                   </div>
-                  <div class="glass-input-container">
-                    <label class="block mb-2">Raça</label>
-                    <input
-                      type="text"
-                      id="pet-breed"
-                      placeholder="Qual a raça do seu pet?"
-                      class="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-secondary outline-none"
-                      data-tracking="form-raca"
-                    />
-                  </div>
-                  <div class="glass-input-container">
-                    <label class="block mb-2">Data e Hora Desejada</label>
-                    <div class="flex gap-4">
-                      <input
-                        type="date"
-                        id="pet-date"
-                        class="flex-1 p-3 rounded-lg bg-white/10 border border-white/20 focus:border-secondary outline-none"
-                        data-tracking="form-data"
-                      />
-                      <input
-                        type="time"
-                        id="pet-time"
-                        class="flex-1 p-3 rounded-lg bg-white/10 border border-white/20 focus:border-secondary outline-none"
-                        data-tracking="form-hora"
-                      />
+                </div>
+
+                <div class="step hidden" data-step="3">
+                  <h3 class="text-xl mb-6 neon-text flex items-center">
+                    <span class="cyber-badge mr-2">03</span>
+                    Informações do seu pet
+                  </h3>
+                  <div class="space-y-6">
+                    <div class="modern-input-container">
+                      <div class="input-icon">🏷️</div>
+                      <div class="input-wrapper">
+                        <label class="block mb-2">Nome do Pet</label>
+                        <input
+                          type="text"
+                          id="pet-name"
+                          placeholder="Digite o nome do seu pet"
+                          class="modern-input"
+                          data-tracking="form-nome"
+                        />
+                      </div>
+                    </div>
+                    <div class="modern-input-container">
+                      <div class="input-icon">🐾</div>
+                      <div class="input-wrapper">
+                        <label class="block mb-2">Raça</label>
+                        <input
+                          type="text"
+                          id="pet-breed"
+                          placeholder="Qual a raça do seu pet?"
+                          class="modern-input"
+                          data-tracking="form-raca"
+                        />
+                      </div>
+                    </div>
+                    <div class="modern-input-container">
+                      <div class="input-icon">📅</div>
+                      <div class="input-wrapper">
+                        <label class="block mb-2">Data e Hora Desejada</label>
+                        <div class="flex gap-4">
+                          <input
+                            type="date"
+                            id="pet-date"
+                            class="modern-input"
+                            data-tracking="form-data"
+                          />
+                          <input
+                            type="time"
+                            id="pet-time"
+                            class="modern-input"
+                            data-tracking="form-hora"
+                          />
+                        </div>
+                        <div class="mt-3">
+                          <label class="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              id="use-next-time"
+                              class="modern-checkbox"
+                              data-tracking="form-proximo-horario"
+                            />
+                            <span>Usar próximo horário disponível</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modern-input-container">
+                      <div class="input-icon">📝</div>
+                      <div class="input-wrapper">
+                        <label class="block mb-2">Observações</label>
+                        <textarea
+                          id="pet-obs"
+                          placeholder="Alguma informação importante sobre seu pet?"
+                          class="modern-input"
+                          rows="3"
+                          data-tracking="form-obs"
+                        ></textarea>
+                      </div>
                     </div>
                   </div>
-                  <div class="glass-input-container">
-                    <label class="block mb-2">Observações</label>
-                    <textarea
-                      id="pet-obs"
-                      placeholder="Alguma informação importante sobre seu pet?"
-                      class="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-secondary outline-none"
-                      rows="3"
-                      data-tracking="form-obs"
-                    ></textarea>
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <button
+                    id="prev-btn"
+                    class="modern-button secondary hidden"
+                    data-tracking="form-voltar"
+                  >
+                    <span class="mr-2">←</span> Voltar
+                  </button>
+                  <div class="flex-1 flex justify-center">
+                    <div class="modern-progress">
+                      <div class="progress-step active" data-step="1"></div>
+                      <div class="progress-connector"></div>
+                      <div class="progress-step" data-step="2"></div>
+                      <div class="progress-connector"></div>
+                      <div class="progress-step" data-step="3"></div>
+                    </div>
+                  </div>
+                  <button
+                    id="next-btn"
+                    class="modern-button primary"
+                    data-tracking="form-continuar"
+                  >
+                    Continuar <span class="ml-2">→</span>
+                  </button>
+                </div>
+
+                <!-- Confirmação -->
+                <div class="step hidden" id="step-4">
+                  <h3 class="text-2xl font-bold mb-4">Confirmação</h3>
+                  <div class="success-checkmark animated">
+                    <div class="check-icon">
+                      <span class="icon-line line-tip"></span>
+                      <span class="icon-line line-long"></span>
+                    </div>
+                  </div>
+                  <p class="text-center mb-6 mt-4">
+                    Está quase... clique para enviar.
+                  </p>
+                  <div class="glass-container p-4 mb-6">
+                    <h4 class="font-bold mb-2">Detalhes do Agendamento:</h4>
+                    <div id="booking-details" class="space-y-2"></div>
+                  </div>
+                  <div class="flex flex-col sm:flex-row gap-4 justify-between">
+                    <button id="new-booking" class="modern-button secondary">
+                      Fazer Novo Agendamento
+                    </button>
+                    <a
+                      id="send-whatsapp"
+                      href="#"
+                      class="modern-button primary"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5 mr-2"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M.057 24l1.687-6.163C.703 16.033.156 13.988.157 11.891.16 5.335 5.495 0 12.05 0c3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
+                        ></path>
+                      </svg>
+                      Enviar Agendamento pelo WhatsApp
+                    </a>
                   </div>
                 </div>
-              </div>
-
-              <div class="flex justify-between items-center">
-                <button
-                  id="prev-btn"
-                  class="glass-button hidden"
-                  data-tracking="form-voltar"
-                >
-                  <span class="mr-2">←</span> Voltar
-                </button>
-                <div class="flex-1"></div>
-                <div class="steps-indicator flex space-x-2">
-                  <span class="w-3 h-3 rounded-full bg-secondary"></span>
-                  <span class="w-3 h-3 rounded-full bg-white/30"></span>
-                  <span class="w-3 h-3 rounded-full bg-white/30"></span>
-                </div>
-                <div class="flex-1"></div>
-                <button
-                  id="next-btn"
-                  class="neon-button"
-                  data-tracking="form-continuar"
-                >
-                  Continuar <span class="ml-2">→</span>
-                </button>
               </div>
             </div>
           </div>
@@ -922,10 +1042,9 @@
                     >
                   </div>
                   <a
-                    href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20comprar%20a%20cama%20ortopédica%20luxuosa%20por%20R$%20129,90."
+                    href="#agendamento"
                     class="neon-button-sm"
                     data-tracking="btn-comprar-cama"
-                    target="_blank"
                     >Comprar</a
                   >
                 </div>
@@ -935,10 +1054,9 @@
 
           <div class="text-center mt-10">
             <a
-              href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20produtos%20da%20boutique%20Pet%20Shiba."
+              href="#agendamento"
               class="neon-button"
               data-tracking="btn-ver-boutique"
-              target="_blank"
               >Ver Toda a Coleção</a
             >
           </div>
@@ -1052,7 +1170,7 @@
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
                           ></path>
                         </svg>
                         (11) 96944-0495
@@ -1079,10 +1197,9 @@
                       </a>
                     </p>
                     <a
-                      href="https://wa.me/5511969440495?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20os%20serviços%20da%20Pet%20Shiba."
+                      href="#agendamento"
                       class="neon-button w-full"
                       data-tracking="btn-contato-principal"
-                      target="_blank"
                       >Entre em Contato</a
                     >
                   </div>
@@ -1139,7 +1256,7 @@
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
                       ></path>
                     </svg>
                   </a>
@@ -1381,6 +1498,52 @@
         </svg>
       </button>
     </div>
+
+    <!-- Seção de Proposta -->
+    <section id="proposta" class="py-16 relative">
+      <div class="container mx-auto px-4">
+        <div
+          class="glass-container p-8 rounded-xl max-w-4xl mx-auto relative overflow-hidden"
+        >
+          <div class="neon-border"></div>
+          <h2 class="text-3xl font-bold mb-6 text-center neon-text-glow">
+            Transformação Digital para seu Negócio
+          </h2>
+
+          <div class="mb-8 text-center">
+            <p class="mb-4">
+              Inspirados no conceito de "Leapfrogging" da gestão estratégica,
+              onde empresas dão saltos tecnológicos sem passar por estágios
+              intermediários, nascemos para impulsionar negócios através de
+              transformação digital acelerada.
+            </p>
+            <p class="mb-4">
+              Assim como um sapo (frog) que salta diretamente ao seu objetivo,
+              ajudamos nossos clientes a alcançarem resultados extraordinários,
+              pulando etapas desnecessárias e implementando soluções digitais de
+              ponta.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="glass-card p-6 text-center">
+              <h3 class="text-xl font-bold mb-3 text-secondary">Missão</h3>
+              <p>Acelerar a transformação digital dos nossos clientes.</p>
+            </div>
+            <div class="glass-card p-6 text-center">
+              <h3 class="text-xl font-bold mb-3 text-secondary">Visão</h3>
+              <p>Ser referência em inovação e agilidade.</p>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <a href="#agendamento" class="neon-button" target="_blank">
+              Ver Proposta Completa
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <script src="script.js"></script>
   </body>

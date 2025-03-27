@@ -49,220 +49,379 @@ function addDecorativeShapes() {
 // Inicializa o formulário de agendamento em etapas
 function initAgendamentoForm() {
   const form = document.getElementById("agendamento-form");
-
   if (!form) return;
 
   const steps = form.querySelectorAll(".step");
-  const nextBtn = document.getElementById("next-btn");
   const prevBtn = document.getElementById("prev-btn");
-  const stepsIndicator = document.querySelector(".steps-indicator");
-  const stepsIndicatorDots = stepsIndicator
-    ? stepsIndicator.querySelectorAll("span")
-    : [];
+  const nextBtn = document.getElementById("next-btn");
+  const progressSteps = document.querySelectorAll(".progress-step");
+  const progressConnectors = document.querySelectorAll(".progress-connector");
 
   let currentStep = 1;
-  let selectedService = "";
-  let selectedSize = "";
-  let useProximoHorario = false;
+  let formData = {
+    service: "",
+    size: "",
+    name: "",
+    breed: "",
+    date: "",
+    time: "",
+    notes: "",
+  };
 
-  // Botões de serviço
-  const serviceBtns = form.querySelectorAll(".service-btn");
-  serviceBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      selectedService = this.dataset.service;
-      serviceBtns.forEach((b) => b.classList.remove("active"));
-      this.classList.add("active");
+  // Verificar se um serviço foi selecionado via link
+  const checkPreselectedService = () => {
+    // Buscar links com data-service que apontam para #agendamento
+    const serviceLinks = document.querySelectorAll(
+      'a[href="#agendamento"][data-service]'
+    );
 
-      // Salvar no tracking do funil
-      trackFunnelStep(1);
+    serviceLinks.forEach((link) => {
+      link.addEventListener("click", function (e) {
+        const selectedService = this.getAttribute("data-service");
+        if (selectedService) {
+          // Encontrar o botão de serviço correspondente no formulário
+          const serviceButtons = form.querySelectorAll(".service-btn");
+          let foundButton = null;
+
+          serviceButtons.forEach((btn) => {
+            if (btn.getAttribute("data-service") === selectedService) {
+              foundButton = btn;
+            }
+          });
+
+          // Se encontrou o botão, simular clique
+          if (foundButton) {
+            // Remover seleção atual
+            serviceButtons.forEach((btn) => btn.classList.remove("selected"));
+            // Adicionar seleção ao botão do serviço
+            foundButton.classList.add("selected");
+            // Armazenar dados
+            formData.service = selectedService;
+            // Analytics
+            logFormEvent("service_selected", selectedService);
+
+            // Avançar automaticamente para o próximo passo
+            setTimeout(() => {
+              nextBtn.click();
+            }, 500);
+          }
+        }
+      });
     });
-  });
+  };
 
-  // Botões de tamanho
-  const sizeBtns = form.querySelectorAll(".size-btn");
-  sizeBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      selectedSize = this.dataset.size;
-      sizeBtns.forEach((b) => b.classList.remove("active"));
-      this.classList.add("active");
+  // Chamar a verificação de serviço pré-selecionado
+  checkPreselectedService();
 
-      // Salvar no tracking do funil
-      trackFunnelStep(2);
-    });
-  });
+  // Atualizar a UI para mostrar a etapa atual
+  const updateUI = () => {
+    // Esconder todas as etapas
+    steps.forEach((step) => step.classList.add("hidden"));
 
-  // Adicionar botão de "Próximo horário disponível"
-  const petDateContainer =
-    document.getElementById("pet-date")?.parentElement.parentElement;
-  if (petDateContainer) {
-    const proximoHorarioBtn = document.createElement("button");
-    proximoHorarioBtn.className = "glass-button w-full mt-2";
-    proximoHorarioBtn.innerText = "Usar próximo horário disponível";
-    proximoHorarioBtn.setAttribute("type", "button");
-    proximoHorarioBtn.setAttribute("data-tracking", "form-proximo-horario");
+    // Mostrar a etapa atual
+    steps[currentStep - 1].classList.remove("hidden");
 
-    proximoHorarioBtn.addEventListener("click", function () {
-      const petDate = document.getElementById("pet-date");
-      const petTime = document.getElementById("pet-time");
-
-      useProximoHorario = !useProximoHorario;
-
-      if (useProximoHorario) {
-        this.innerText = "Escolher data específica";
-        this.classList.add("active");
-
-        // Desativar campos de data e hora
-        if (petDate) {
-          petDate.disabled = true;
-          petDate.classList.add("opacity-50");
-        }
-        if (petTime) {
-          petTime.disabled = true;
-          petTime.classList.add("opacity-50");
-        }
-      } else {
-        this.innerText = "Usar próximo horário disponível";
-        this.classList.remove("active");
-
-        // Reativar campos de data e hora
-        if (petDate) {
-          petDate.disabled = false;
-          petDate.classList.remove("opacity-50");
-        }
-        if (petTime) {
-          petTime.disabled = false;
-          petTime.classList.remove("opacity-50");
-        }
-      }
-    });
-
-    petDateContainer.appendChild(proximoHorarioBtn);
-  }
-
-  // Botão próximo
-  nextBtn.addEventListener("click", function () {
-    // Verifica se selecionou um serviço no passo 1
-    if (currentStep === 1 && !selectedService) {
-      showToast("Por favor, selecione um serviço");
-      return;
-    }
-
-    // Verifica se selecionou um tamanho no passo 2
-    if (currentStep === 2 && !selectedSize) {
-      showToast("Por favor, selecione o porte do seu pet");
-      return;
-    }
-
-    // Se estiver no último passo, enviar para o WhatsApp
-    if (currentStep === 3) {
-      const petName = document.getElementById("pet-name").value;
-      const petBreed = document.getElementById("pet-breed").value;
-      const petObs = document.getElementById("pet-obs").value;
-      const petDate = document.getElementById("pet-date").value;
-      const petTime = document.getElementById("pet-time").value;
-
-      if (!petName) {
-        showToast("Por favor, informe o nome do seu pet");
-        return;
-      }
-
-      // Salvar no tracking do funil
-      trackFunnelStep(4); // Conversão final
-
-      // Construir mensagem para WhatsApp
-      let message = `Olá! Gostaria de agendar o serviço de ${selectedService} para meu pet de porte ${selectedSize}.`;
-      message += `\nNome do pet: ${petName}`;
-
-      if (petBreed) {
-        message += `\nRaça: ${petBreed}`;
-      }
-
-      if (useProximoHorario) {
-        message += "\nDesejo o próximo horário disponível";
-      } else if (petDate) {
-        // Formatar a data para o formato brasileiro (DD/MM/AAAA)
-        const dateParts = petDate.split("-");
-        const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
-        message += `\nData desejada: ${formattedDate}`;
-
-        if (petTime) {
-          message += `\nHorário desejado: ${petTime}`;
-        }
-      }
-
-      if (petObs) {
-        message += `\nObservações: ${petObs}`;
-      }
-
-      // Redirecionar para WhatsApp
-      const whatsappURL = `https://wa.me/5511969440495?text=${encodeURIComponent(
-        message
-      )}`;
-      window.location.href = whatsappURL;
-      return;
-    }
-
-    // Avançar para o próximo passo
-    steps[currentStep - 1].classList.add("hidden");
-    steps[currentStep].classList.remove("hidden");
-    currentStep++;
-
-    // Atualizar estado dos botões
-    if (currentStep > 1) {
+    // Atualizar botão voltar
+    if (currentStep === 1) {
+      prevBtn.classList.add("hidden");
+    } else {
       prevBtn.classList.remove("hidden");
     }
 
+    // Atualizar texto do botão avançar
     if (currentStep === 3) {
-      nextBtn.innerText = "Agendar";
-
-      // Salvar no tracking do funil quando chegar no passo 3
-      trackFunnelStep(3);
+      nextBtn.textContent = "Finalizar Agendamento";
+    } else {
+      nextBtn.textContent = "Continuar →";
     }
 
-    // Atualizar indicador de passos
-    updateStepsIndicator();
-  });
-
-  // Botão voltar
-  prevBtn.addEventListener("click", function () {
-    steps[currentStep - 1].classList.add("hidden");
-    currentStep--;
-    steps[currentStep - 1].classList.remove("hidden");
-
-    if (currentStep === 1) {
-      prevBtn.classList.add("hidden");
-    }
-
-    if (currentStep < 3) {
-      nextBtn.innerText = "Continuar";
-    }
-
-    // Atualizar indicador de passos
-    updateStepsIndicator();
-  });
-
-  // Função para atualizar indicador de passos
-  function updateStepsIndicator() {
-    if (!stepsIndicatorDots.length) return;
-
-    stepsIndicatorDots.forEach((dot, index) => {
-      if (index + 1 === currentStep) {
-        dot.classList.remove("bg-white/30");
-        dot.classList.add("bg-secondary");
-      } else if (index + 1 < currentStep) {
-        dot.classList.remove("bg-white/30");
-        dot.classList.add("bg-secondary/70");
-      } else {
-        dot.classList.remove("bg-secondary", "bg-secondary/70");
-        dot.classList.add("bg-white/30");
+    // Atualizar indicadores de progresso
+    progressSteps.forEach((step, index) => {
+      step.classList.remove("active", "completed");
+      if (index + 1 < currentStep) {
+        step.classList.add("completed");
+      } else if (index + 1 === currentStep) {
+        step.classList.add("active");
       }
+    });
+
+    // Atualizar conectores de progresso
+    progressConnectors.forEach((connector, index) => {
+      connector.classList.remove("active");
+      if (index + 1 < currentStep) {
+        connector.classList.add("active");
+      }
+    });
+
+    // Efeito de entrada para a etapa atual
+    const currentStepEl = steps[currentStep - 1];
+    currentStepEl.style.opacity = "0";
+    currentStepEl.style.transform = "translateY(20px)";
+
+    setTimeout(() => {
+      currentStepEl.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+      currentStepEl.style.opacity = "1";
+      currentStepEl.style.transform = "translateY(0)";
+    }, 50);
+  };
+
+  // Selecionar um serviço
+  const serviceButtons = form.querySelectorAll(".service-btn");
+  serviceButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      // Remover seleção atual
+      serviceButtons.forEach((btn) => btn.classList.remove("selected"));
+
+      // Aplicar seleção
+      this.classList.add("selected");
+
+      // Armazenar dados
+      formData.service = this.getAttribute("data-service");
+
+      // Trigger de analytics
+      logFormEvent("service_selected", formData.service);
+    });
+  });
+
+  // Selecionar um tamanho
+  const sizeButtons = form.querySelectorAll(".size-btn");
+  sizeButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      // Remover seleção atual
+      sizeButtons.forEach((btn) => btn.classList.remove("selected"));
+
+      // Aplicar seleção
+      this.classList.add("selected");
+
+      // Armazenar dados
+      formData.size = this.getAttribute("data-size");
+
+      // Trigger de analytics
+      logFormEvent("size_selected", formData.size);
+    });
+  });
+
+  // Eventos dos botões de navegação
+  prevBtn.addEventListener("click", () => {
+    if (currentStep > 1) {
+      currentStep--;
+      updateUI();
+
+      // Trigger de analytics
+      logFormEvent("step_back", `step_${currentStep}`);
+    }
+  });
+
+  // Checkbox para usar o próximo horário disponível
+  const useNextTimeCheckbox = document.getElementById("use-next-time");
+  const petDateInput = document.getElementById("pet-date");
+  const petTimeInput = document.getElementById("pet-time");
+
+  if (useNextTimeCheckbox && petDateInput && petTimeInput) {
+    useNextTimeCheckbox.addEventListener("change", function () {
+      // Desabilitar/habilitar campos de data e hora
+      petDateInput.disabled = this.checked;
+      petTimeInput.disabled = this.checked;
+
+      // Trigger de analytics
+      logFormEvent(
+        "next_time_" + (this.checked ? "selected" : "unselected"),
+        "form_option"
+      );
     });
   }
 
-  // Adicionar eventos para inputs do formulário
-  document.getElementById("pet-name")?.addEventListener("focus", function () {
-    trackFunnelStep(3);
+  nextBtn.addEventListener("click", () => {
+    let canProceed = true;
+
+    // Validação por etapa
+    if (currentStep === 1) {
+      if (!formData.service) {
+        canProceed = false;
+        showToast("Por favor, selecione um serviço para continuar");
+      }
+    } else if (currentStep === 2) {
+      if (!formData.size) {
+        canProceed = false;
+        showToast("Por favor, selecione o porte do seu pet");
+      }
+    } else if (currentStep === 3) {
+      // Coletar dados do formulário
+      formData.name = document.getElementById("pet-name").value;
+      formData.breed = document.getElementById("pet-breed").value;
+      formData.date = document.getElementById("pet-date").value;
+      formData.time = document.getElementById("pet-time").value;
+      formData.notes = document.getElementById("pet-obs").value;
+
+      // Verificar se está usando próximo horário disponível
+      const useNextTime =
+        document.getElementById("use-next-time")?.checked || false;
+      formData.useNextTime = useNextTime;
+
+      if (!formData.name) {
+        canProceed = false;
+        showToast("Por favor, informe o nome do seu pet");
+      } else if (!useNextTime && (!formData.date || !formData.time)) {
+        // Só validar data e hora se não estiver usando próximo horário disponível
+        canProceed = false;
+        showToast("Por favor, selecione uma data e horário");
+      }
+    }
+
+    if (canProceed) {
+      if (currentStep < 4) {
+        currentStep++;
+        updateUI();
+
+        // Se for a última etapa, mostrar resumo do agendamento
+        if (currentStep === 4) {
+          showBookingSummary();
+        }
+
+        // Trigger de analytics
+        logFormEvent("step_forward", `step_${currentStep}`);
+      }
+    }
   });
+
+  // Exibir resumo do agendamento
+  function showBookingSummary() {
+    const bookingDetails = document.getElementById("booking-details");
+    if (!bookingDetails) return;
+
+    // Verificar se está usando o próximo horário disponível
+    const useNextTime =
+      document.getElementById("use-next-time")?.checked || false;
+
+    // Formatar data
+    const formattedDate = formData.date
+      ? new Date(formData.date).toLocaleDateString("pt-BR")
+      : "";
+
+    // Montar o HTML do resumo com ou sem informações de data/hora
+    let summaryHTML = `
+      <p><strong>Serviço:</strong> ${formData.service}</p>
+      <p><strong>Porte do Pet:</strong> ${formData.size}</p>
+      <p><strong>Nome do Pet:</strong> ${formData.name}</p>
+      <p><strong>Raça:</strong> ${formData.breed || "Não informado"}</p>
+    `;
+
+    if (useNextTime) {
+      summaryHTML += `<p><strong>Horário:</strong> Próximo horário disponível</p>`;
+    } else {
+      summaryHTML += `
+        <p><strong>Data:</strong> ${formattedDate}</p>
+        <p><strong>Horário:</strong> ${formData.time}</p>
+      `;
+    }
+
+    if (formData.notes) {
+      summaryHTML += `<p><strong>Observações:</strong> ${formData.notes}</p>`;
+    }
+
+    bookingDetails.innerHTML = summaryHTML;
+
+    // Preparar link do WhatsApp
+    const sendWhatsappButton = document.getElementById("send-whatsapp");
+    if (sendWhatsappButton) {
+      // Construir mensagem para WhatsApp
+      let message = `Olá! Gostaria de agendar o serviço de *${formData.service}* para meu pet de porte *${formData.size}*.`;
+      message += `\n*Nome do pet:* ${formData.name}`;
+
+      if (formData.breed) {
+        message += `\n*Raça:* ${formData.breed}`;
+      }
+
+      if (useNextTime) {
+        message += `\n*Horário:* Gostaria do próximo horário disponível`;
+      } else if (formData.date && formData.time) {
+        message += `\n*Data desejada:* ${formattedDate}`;
+        message += `\n*Horário desejado:* ${formData.time}`;
+      }
+
+      if (formData.notes) {
+        message += `\n*Observações:* ${formData.notes}`;
+      }
+
+      // Adicionar evento de clique no botão
+      sendWhatsappButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        const whatsappURL = `https://wa.me/5511969440495?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(whatsappURL, "_blank");
+        showToast("Abrindo WhatsApp para confirmar seu agendamento!");
+        logFormEvent("whatsapp_sent", "message_sent");
+      });
+    }
+
+    // Trigger de analytics de conversão
+    logFormEvent("booking_completed", JSON.stringify(formData));
+
+    // Atualizar funnel de conversão
+    if (window.trackingData) {
+      window.trackingData.funnelSteps.step4++;
+    }
+  }
+
+  // Botão para fazer novo agendamento
+  const newBookingBtn = document.getElementById("new-booking");
+  if (newBookingBtn) {
+    newBookingBtn.addEventListener("click", () => {
+      // Resetar formulário
+      formData = {
+        service: "",
+        size: "",
+        name: "",
+        breed: "",
+        date: "",
+        time: "",
+        notes: "",
+      };
+
+      // Resetar seleções
+      serviceButtons.forEach((btn) => btn.classList.remove("selected"));
+      sizeButtons.forEach((btn) => btn.classList.remove("selected"));
+
+      // Limpar campos
+      document.getElementById("pet-name").value = "";
+      document.getElementById("pet-breed").value = "";
+      document.getElementById("pet-date").value = "";
+      document.getElementById("pet-time").value = "";
+      document.getElementById("pet-obs").value = "";
+
+      // Voltar para primeira etapa
+      currentStep = 1;
+      updateUI();
+
+      // Trigger de analytics
+      logFormEvent("new_booking_started", "form_reset");
+    });
+  }
+
+  // Iniciar tracking do funil
+  function logFormEvent(action, label) {
+    if (window.trackingData) {
+      // Registar evento
+      const eventId = `form_${action}`;
+      if (!window.trackingData.clicks[eventId]) {
+        window.trackingData.clicks[eventId] = 0;
+      }
+      window.trackingData.clicks[eventId]++;
+      window.trackingData.totalClicks++;
+
+      // Atualizar etapa do funil
+      if (action === "step_forward") {
+        const step = parseInt(label.split("_")[1]);
+        if (step <= 4) {
+          window.trackingData.funnelSteps[`step${step}`]++;
+        }
+      }
+    }
+  }
+
+  // Inicializar UI
+  updateUI();
 }
 
 // Inicializa o menu mobile
@@ -795,11 +954,44 @@ function initHeroSection() {
       }
     });
 
-    // Gatilho de glitch aleatório
-    setInterval(triggerRandomGlitch, 3000);
+    // Iniciar efeito fofo flutuante no lugar da digitação
+    initCuteEffect();
 
     // Inicializar partículas se a biblioteca estiver disponível
     initParticles();
+  }
+}
+
+// Função para iniciar o efeito fofo
+function initCuteEffect() {
+  const heroTypingElement = document.querySelector(".hero-typing");
+  if (heroTypingElement) {
+    // Substituir o elemento de digitação por um efeito mais fofo
+    heroTypingElement.classList.remove("hero-typing");
+    heroTypingElement.classList.add("cute-animation");
+
+    // Emojis fofos de animais
+    const cuteEmojis = ["🐶", "🐱", "🐰", "🦊", "🐼", "🦄", "🐕", "🐾"];
+
+    // Criar texto base
+    heroTypingElement.innerHTML = `
+      <span class="cute-text">Cuidado Premium para seu Pet</span>
+      <div class="floating-emojis"></div>
+      <div class="big-pet big-dog">🐕</div>
+      <div class="big-pet big-cat">🐈</div>
+    `;
+
+    // Adicionar emojis flutuantes
+    const floatingEmojis = heroTypingElement.querySelector(".floating-emojis");
+
+    cuteEmojis.forEach((emoji, index) => {
+      const emojiElement = document.createElement("span");
+      emojiElement.classList.add("floating-emoji");
+      emojiElement.textContent = emoji;
+      emojiElement.style.animationDelay = `${index * 0.5}s`;
+      emojiElement.style.left = `${10 + index * 10}%`;
+      floatingEmojis.appendChild(emojiElement);
+    });
   }
 }
 
@@ -909,27 +1101,6 @@ function setupParticles() {
       },
       retina_detect: true,
     });
-  }
-}
-
-// Função para acionar efeito glitch aleatoriamente
-function triggerRandomGlitch() {
-  const glitchContainer = document.querySelector(".glitch-container");
-  const glitchText = document.querySelector(".glitch-text");
-
-  if (!glitchContainer || !glitchText) return;
-
-  // 20% de chance de acionar o glitch
-  if (Math.random() > 0.8) {
-    // Adicionar classe de glitch intenso
-    glitchContainer.classList.add("glitch-active");
-    glitchText.classList.add("glitch-active");
-
-    // Remover após um curto período
-    setTimeout(() => {
-      glitchContainer.classList.remove("glitch-active");
-      glitchText.classList.remove("glitch-active");
-    }, 200);
   }
 }
 
