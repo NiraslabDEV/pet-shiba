@@ -432,161 +432,115 @@ function initAgendamentoForm() {
   updateUI();
 }
 
-// Inicializa o menu mobile
+// Inicializa o menu mobile com uma estrutura simplificada
 function initMobileMenu() {
-  console.log("Inicializando menu mobile");
-  const menuButton = document.getElementById("mobile-menu-btn");
-  console.log("Menu button:", menuButton);
+  console.log("Inicializando menu mobile simplificado");
 
-  if (!menuButton) {
-    console.error("Botão de menu não encontrado!");
+  // Elementos do menu
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+  const mobileNavOverlay = document.getElementById("mobile-nav");
+  const closeBtn = document.getElementById("close-mobile-nav");
+  const mobileLinks = document.querySelectorAll(".mobile-link");
+
+  // Verificar se os elementos existem
+  if (!hamburgerBtn) {
+    console.error("Botão do menu mobile não encontrado (hamburger-btn)");
     return;
   }
 
-  const nav = document.querySelector("nav");
-  const header = document.querySelector("header");
-
-  if (!nav) {
-    console.error("Nav não encontrado!");
+  if (!mobileNavOverlay) {
+    console.error("Overlay do menu mobile não encontrado (mobile-nav)");
     return;
   }
 
-  // Garantir que o menu começa oculto em dispositivos móveis
-  if (window.innerWidth < 768) {
-    nav.classList.add("hidden");
-    nav.classList.remove("md:flex");
-  }
+  // Função para abrir o menu
+  const openMobileMenu = () => {
+    console.log("Abrindo menu mobile");
+    hamburgerBtn.classList.add("active");
+    mobileNavOverlay.classList.add("active");
+    document.body.style.overflow = "hidden"; // Prevenir rolagem
+  };
 
-  // Função para mostrar o menu
-  function showMenu() {
-    console.log("Mostrando menu");
-    // Remover classes que escondem o menu
-    nav.classList.remove("hidden", "md:flex");
+  // Função para fechar o menu
+  const closeMobileMenu = () => {
+    console.log("Fechando menu mobile");
+    hamburgerBtn.classList.remove("active");
+    mobileNavOverlay.classList.remove("active");
+    document.body.style.overflow = ""; // Restaurar rolagem
+  };
 
-    // Adicionar classes para o estilo do menu mobile
-    nav.classList.add(
-      "flex",
-      "flex-col",
-      "fixed",
-      "top-24",
-      "right-4",
-      "glass-container",
-      "p-4",
-      "space-y-4",
-      "z-[9999]"
-    );
-
-    // Certificar que o header fica acima de tudo
-    header.classList.add("z-[9999]");
-
-    // Adicionar overlay para fechar o menu ao clicar fora
-    const overlay = document.createElement("div");
-    overlay.classList.add("mobile-menu-overlay");
-    overlay.style.position = "fixed";
-    overlay.style.top = "0";
-    overlay.style.left = "0";
-    overlay.style.width = "100%";
-    overlay.style.height = "100%";
-    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-    overlay.style.zIndex = "999";
-    overlay.style.backdropFilter = "blur(3px)";
-    document.body.appendChild(overlay);
-
-    // Fechar menu ao clicar no overlay
-    overlay.addEventListener("click", hideMenu);
-  }
-
-  // Função para esconder o menu
-  function hideMenu() {
-    console.log("Escondendo menu");
-    // Adicionar classes que escondem o menu
-    nav.classList.add("hidden");
-
-    // Para desktop
-    if (window.innerWidth >= 768) {
-      nav.classList.add("md:flex");
-    }
-
-    // Remover classes do estilo mobile
-    nav.classList.remove(
-      "flex",
-      "flex-col",
-      "fixed",
-      "top-24",
-      "right-4",
-      "glass-container",
-      "p-4",
-      "space-y-4",
-      "z-[9999]"
-    );
-
-    // Remover overlay
-    const overlay = document.querySelector(".mobile-menu-overlay");
-    if (overlay) {
-      overlay.remove();
-    }
-  }
-
-  // Alternar o menu quando o botão for clicado
-  menuButton.addEventListener("click", function (e) {
-    console.log("Botão de menu clicado");
+  // Adicionar evento de clique ao botão hamburger
+  hamburgerBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    if (nav.classList.contains("hidden")) {
-      showMenu();
-    } else {
-      hideMenu();
-    }
+    openMobileMenu();
   });
 
-  // Fechar menu ao clicar em um link
-  const navLinks = nav.querySelectorAll("a");
-  navLinks.forEach((link) => {
-    link.addEventListener("click", hideMenu);
-  });
+  // Adicionar evento de clique ao botão de fechar
+  if (closeBtn) {
+    closeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeMobileMenu();
+    });
+  }
 
-  // Adicionar efeito visual ao botão
-  menuButton.style.transition =
-    "transform 0.3s ease, background-color 0.3s ease";
-  menuButton.addEventListener("mouseover", function () {
-    this.style.transform = "scale(1.1)";
-  });
-  menuButton.addEventListener("mouseout", function () {
-    this.style.transform = "scale(1)";
-  });
-  menuButton.addEventListener("touchstart", function () {
-    this.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
-  });
-  menuButton.addEventListener("touchend", function () {
-    this.style.backgroundColor = "transparent";
-  });
+  // Adicionar eventos aos links do menu mobile
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
 
-  // Ajustar menu quando a janela for redimensionada
-  window.addEventListener("resize", function () {
-    if (window.innerWidth >= 768) {
-      nav.classList.remove(
-        "hidden",
-        "flex",
-        "flex-col",
-        "fixed",
-        "top-24",
-        "right-4",
-        "glass-container",
-        "p-4",
-        "space-y-4",
-        "z-[9999]"
-      );
-      nav.classList.add("md:flex");
+      // Fechar o menu
+      closeMobileMenu();
 
-      // Remover overlay se existir
-      const overlay = document.querySelector(".mobile-menu-overlay");
-      if (overlay) {
-        overlay.remove();
+      // Obter o ID da seção alvo
+      const targetId = link.getAttribute("href").substring(1);
+      const targetSection = document.getElementById(targetId);
+
+      if (targetSection) {
+        // Adicionar pequeno atraso para melhor UX durante a transição
+        setTimeout(() => {
+          // Obter altura do header fixo
+          const headerHeight =
+            document.querySelector("header").offsetHeight || 0;
+
+          // Calcular posição com offset
+          const offsetTop = targetSection.offsetTop - headerHeight;
+
+          // Rolar até a seção
+          window.scrollTo({
+            top: offsetTop,
+            behavior: "smooth",
+          });
+        }, 300);
       }
-    } else if (!nav.classList.contains("flex")) {
-      nav.classList.add("hidden");
-      nav.classList.remove("md:flex");
+    });
+  });
+
+  // Fechar o menu ao clicar fora
+  mobileNavOverlay.addEventListener("click", (e) => {
+    // Verificar se o clique foi no overlay e não no conteúdo
+    if (e.target === mobileNavOverlay) {
+      closeMobileMenu();
     }
   });
+
+  // Fechar o menu ao pressionar ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && mobileNavOverlay.classList.contains("active")) {
+      closeMobileMenu();
+    }
+  });
+
+  // Fechar menu ao redimensionar para desktop
+  window.addEventListener("resize", () => {
+    if (
+      window.innerWidth >= 768 &&
+      mobileNavOverlay.classList.contains("active")
+    ) {
+      closeMobileMenu();
+    }
+  });
+
+  console.log("Menu mobile inicializado com sucesso");
 }
 
 // Animação na rolagem da página
@@ -1004,51 +958,48 @@ function updateFunnelVisualization() {
     percent4Element.textContent = step4 + " (" + percent4.toFixed(0) + "%)";
 }
 
-// Inicializa os efeitos da hero section
+// Inicializa os efeitos da hero section de forma simplificada
 function initHeroSection() {
-  // Adicionar movimento de mouse parallax
+  // Adicionar movimento de mouse parallax suave
   const heroSection = document.querySelector(".hero-section");
   if (heroSection) {
-    // Efeito parallax ao mover o mouse
+    // Efeito parallax sutil ao mover o mouse
     heroSection.addEventListener("mousemove", function (e) {
       const shapes = document.querySelectorAll(".hero-shape");
-      const glitchText = document.querySelector(".glitch-text");
       const logo = document.querySelector(".hero-logo");
 
       // Calcular a posição relativa do mouse entre -1 e 1
       const x = (e.clientX / window.innerWidth - 0.5) * 2;
       const y = (e.clientY / window.innerHeight - 0.5) * 2;
 
-      // Mover as formas de acordo com o movimento do mouse
+      // Mover as formas com efeito suave
       shapes.forEach((shape) => {
         const speed = shape.classList.contains("shape-1")
-          ? 15
+          ? 8 // Reduzir velocidade para efeito mais sutil
           : shape.classList.contains("shape-2")
-          ? 10
-          : 20;
+          ? 5
+          : 10;
+
+        // Usar transform com transition para suavizar o movimento
         shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
       });
 
-      // Efeito sutil no texto e logo
-      if (glitchText) {
-        glitchText.style.transform = `translate(${x * -5}px, ${y * -5}px)`;
-      }
-
+      // Efeito sutil apenas no logo
       if (logo) {
-        logo.style.transform = `translateY(${
-          -15 * Math.sin(Date.now() * 0.001)
-        }px) rotate(${x * 2}deg)`;
+        logo.style.transform = `scale(${1 + Math.abs(x) * 0.02})`;
       }
     });
 
-    // Iniciar efeito fofo flutuante no lugar da digitação
-    initCuteEffect();
-
-    // Inicializar partículas se a biblioteca estiver disponível
-    initParticles();
-
-    // Adicionar interatividade ao logo da hero
-    initHeroLogoInteraction();
+    // Adicionar interatividade ao logo da hero (simplificada)
+    const logo = document.querySelector(".hero-logo");
+    if (logo) {
+      logo.addEventListener("click", function () {
+        logo.classList.toggle("hero-logo-activated");
+        setTimeout(() => {
+          logo.classList.remove("hero-logo-activated");
+        }, 1500);
+      });
+    }
   }
 }
 

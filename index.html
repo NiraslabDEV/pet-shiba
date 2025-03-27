@@ -29,9 +29,10 @@
       };
     </script>
   </head>
-  <body class="bg-purple-900 text-white font-poppins">
-    <div class="noise-overlay"></div>
-
+  <body
+    class="bg-gradient-to-br from-[#0a0f1f] to-[#1a103f] text-white min-h-screen"
+  >
+    <!-- Header Simplificado -->
     <header class="glass-container sticky top-0 z-[500] w-full">
       <div
         class="container mx-auto px-4 py-3 flex justify-between items-center"
@@ -49,6 +50,8 @@
             <p class="text-sm text-gray-200">Onde os pets são família</p>
           </div>
         </a>
+
+        <!-- Menu Navegação Desktop -->
         <nav class="hidden md:flex space-x-6">
           <a href="#inicio" class="hover:text-secondary transition-colors"
             >Início</a
@@ -75,74 +78,85 @@
             >Proposta</a
           >
         </nav>
-        <button id="mobile-menu-btn" class="md:hidden text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
+
+        <!-- Apenas o novo botão hamburger -->
+        <button id="hamburger-btn" class="md:hidden hamburger-menu">
+          <div class="hamburger-bar"></div>
+          <div class="hamburger-bar"></div>
+          <div class="hamburger-bar"></div>
         </button>
       </div>
     </header>
 
-    <main>
-      <!-- Banner Principal -->
-      <section id="inicio" class="hero-section py-20 relative overflow-hidden">
-        <div class="glitch-container">
-          <div class="glitch-lines"></div>
+    <!-- Menu mobile simples (separado para evitar conflitos) -->
+    <div id="mobile-nav" class="mobile-nav-overlay">
+      <div class="mobile-nav-container">
+        <div class="mobile-nav-header">
+          <button id="close-mobile-nav" class="close-btn">×</button>
         </div>
+        <div class="mobile-nav-links">
+          <a href="#inicio" class="mobile-link">Início</a>
+          <a href="#servicos" class="mobile-link">Serviços</a>
+          <a href="#sobre" class="mobile-link">Sobre Nós</a>
+          <a href="#agendamento" class="mobile-link">Agendamento</a>
+          <a href="#boutique" class="mobile-link">Boutique</a>
+          <a href="#aniversario" class="mobile-link">Aniversário</a>
+          <a href="#contato" class="mobile-link">Contato</a>
+          <a href="#proposta" class="mobile-link">Proposta</a>
+        </div>
+      </div>
+    </div>
 
-        <div class="hero-particles" id="particles-js"></div>
+    <main>
+      <!-- Banner Principal Simplificado -->
+      <section id="inicio" class="hero-section py-20 relative overflow-hidden">
+        <!-- Formas de fundo simplificadas -->
+        <div class="hero-shapes">
+          <div class="hero-shape shape-1"></div>
+          <div class="hero-shape shape-2"></div>
+          <div class="hero-shape shape-3"></div>
+        </div>
 
         <div class="container mx-auto px-4 relative z-10">
           <div class="hero-content max-w-4xl mx-auto text-center">
-            <div class="mb-6 flex justify-center">
+            <!-- Logo -->
+            <div class="mb-8 flex justify-center">
               <img
                 src="logo-pet-shiba.jpeg"
                 alt="Shiba Pet Care Logo"
-                class="h-24 rounded-full shadow-neon-purple hero-logo"
+                class="h-28 rounded-full shadow-neon-purple hero-logo"
               />
             </div>
 
-            <h2
-              class="glitch-text text-5xl font-bold mb-6"
-              data-text="Shiba Pet Care"
-            >
-              Shiba Pet Care
-            </h2>
+            <!-- Título -->
+            <h2 class="text-5xl font-bold mb-6 text-white">Shiba Pet Care</h2>
 
-            <p class="hero-slogan text-2xl mb-8 relative">
-              <span class="hero-typing">Cuidado Premium para seu Pet</span>
+            <!-- Slogan -->
+            <p class="hero-slogan text-2xl mb-10">
+              Cuidado Premium para seu Pet
             </p>
 
-            <div class="flex flex-wrap justify-center gap-6 mb-10">
-              <div class="glass-card p-5 rounded-lg feature-card hero-feature">
+            <!-- Cards de serviços -->
+            <div class="flex flex-wrap justify-center gap-6 mb-12">
+              <div class="glass-card p-5 rounded-lg hero-feature">
                 <span class="block text-secondary text-3xl mb-2">🌈</span>
                 <span>Cromoterapia</span>
               </div>
-              <div class="glass-card p-5 rounded-lg feature-card hero-feature">
+              <div class="glass-card p-5 rounded-lg hero-feature">
                 <span class="block text-secondary text-3xl mb-2">🎵</span>
                 <span>Musicoterapia</span>
               </div>
-              <div class="glass-card p-5 rounded-lg feature-card hero-feature">
+              <div class="glass-card p-5 rounded-lg hero-feature">
                 <span class="block text-secondary text-3xl mb-2">🛁</span>
                 <span>SPA Pet</span>
               </div>
-              <div class="glass-card p-5 rounded-lg feature-card hero-feature">
+              <div class="glass-card p-5 rounded-lg hero-feature">
                 <span class="block text-secondary text-3xl mb-2">🛍️</span>
                 <span>Boutique</span>
               </div>
             </div>
 
+            <!-- Botão CTA -->
             <div class="hero-cta">
               <a
                 href="#agendamento"
@@ -153,14 +167,6 @@
             </div>
           </div>
         </div>
-
-        <div class="hero-shapes">
-          <div class="hero-shape shape-1"></div>
-          <div class="hero-shape shape-2"></div>
-          <div class="hero-shape shape-3"></div>
-        </div>
-
-        <div class="hero-scanner"></div>
       </section>
 
       <!-- Aniversário Atualizado -->
