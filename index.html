@@ -75,7 +75,7 @@
             >Proposta</a
           >
         </nav>
-        <button class="md:hidden text-white">
+        <button id="mobile-menu-btn" class="md:hidden text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -758,6 +758,20 @@
                     Informações do seu pet
                   </h3>
                   <div class="space-y-6">
+                    <div class="modern-input-container">
+                      <div class="input-icon">👤</div>
+                      <div class="input-wrapper">
+                        <label class="block mb-2">Nome do Proprietário</label>
+                        <input
+                          type="text"
+                          id="owner-name"
+                          placeholder="Digite seu nome completo"
+                          class="modern-input"
+                          data-tracking="form-nome-dono"
+                          required
+                        />
+                      </div>
+                    </div>
                     <div class="modern-input-container">
                       <div class="input-icon">🏷️</div>
                       <div class="input-wrapper">

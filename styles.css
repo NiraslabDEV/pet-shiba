@@ -1812,6 +1812,58 @@ nav.md\:flex a:hover::after {
   animation: intensePulse 1.5s infinite alternate;
 }
 
+/* Estilos para o botão do menu mobile */
+#mobile-menu-btn {
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 9999;
+}
+
+#mobile-menu-btn:hover,
+#mobile-menu-btn:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+}
+
+#mobile-menu-btn:active {
+  transform: scale(0.95);
+}
+
+#mobile-menu-btn svg {
+  transition: transform 0.3s ease;
+}
+
+#mobile-menu-btn:hover svg {
+  transform: scale(1.1);
+  color: var(--secondary);
+}
+
+@media (max-width: 767px) {
+  nav.flex {
+    animation: slideIn 0.3s ease forwards;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @keyframes intensePulse {
   0% {
     text-shadow: 0 0 15px rgba(255, 140, 0, 0.7),

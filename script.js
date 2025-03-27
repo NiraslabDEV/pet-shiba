@@ -61,6 +61,7 @@ function initAgendamentoForm() {
   let formData = {
     service: "",
     size: "",
+    ownerName: "",
     name: "",
     breed: "",
     date: "",
@@ -247,6 +248,7 @@ function initAgendamentoForm() {
       }
     } else if (currentStep === 3) {
       // Coletar dados do formulário
+      formData.ownerName = document.getElementById("owner-name").value;
       formData.name = document.getElementById("pet-name").value;
       formData.breed = document.getElementById("pet-breed").value;
       formData.date = document.getElementById("pet-date").value;
@@ -258,7 +260,10 @@ function initAgendamentoForm() {
         document.getElementById("use-next-time")?.checked || false;
       formData.useNextTime = useNextTime;
 
-      if (!formData.name) {
+      if (!formData.ownerName) {
+        canProceed = false;
+        showToast("Por favor, informe seu nome");
+      } else if (!formData.name) {
         canProceed = false;
         showToast("Por favor, informe o nome do seu pet");
       } else if (!useNextTime && (!formData.date || !formData.time)) {
@@ -300,6 +305,7 @@ function initAgendamentoForm() {
 
     // Montar o HTML do resumo com ou sem informações de data/hora
     let summaryHTML = `
+      <p><strong>Proprietário:</strong> ${formData.ownerName}</p>
       <p><strong>Serviço:</strong> ${formData.service}</p>
       <p><strong>Porte do Pet:</strong> ${formData.size}</p>
       <p><strong>Nome do Pet:</strong> ${formData.name}</p>
@@ -325,7 +331,7 @@ function initAgendamentoForm() {
     const sendWhatsappButton = document.getElementById("send-whatsapp");
     if (sendWhatsappButton) {
       // Construir mensagem para WhatsApp
-      let message = `Olá! Gostaria de agendar o serviço de *${formData.service}* para meu pet de porte *${formData.size}*.`;
+      let message = `Olá! Sou ${formData.ownerName} e gostaria de agendar o serviço de *${formData.service}* para meu pet de porte *${formData.size}*.`;
       message += `\n*Nome do pet:* ${formData.name}`;
 
       if (formData.breed) {
@@ -372,6 +378,7 @@ function initAgendamentoForm() {
       formData = {
         service: "",
         size: "",
+        ownerName: "",
         name: "",
         breed: "",
         date: "",
@@ -384,6 +391,7 @@ function initAgendamentoForm() {
       sizeButtons.forEach((btn) => btn.classList.remove("selected"));
 
       // Limpar campos
+      document.getElementById("owner-name").value = "";
       document.getElementById("pet-name").value = "";
       document.getElementById("pet-breed").value = "";
       document.getElementById("pet-date").value = "";
@@ -426,56 +434,80 @@ function initAgendamentoForm() {
 
 // Inicializa o menu mobile
 function initMobileMenu() {
-  const menuButton = document.querySelector(".md\\:hidden");
+  console.log("Inicializando menu mobile");
+  const menuButton = document.getElementById("mobile-menu-btn");
+  console.log("Menu button:", menuButton);
 
-  if (!menuButton) return;
+  if (!menuButton) {
+    console.error("Botão de menu não encontrado!");
+    return;
+  }
 
   const nav = document.querySelector("nav");
   const header = document.querySelector("header");
 
-  menuButton.addEventListener("click", function () {
-    if (nav.classList.contains("hidden") || nav.classList.contains("md:flex")) {
-      // Adicionando a navegação mobile
-      nav.classList.remove("hidden", "md:flex");
-      nav.classList.add(
-        "flex",
-        "flex-col",
-        "fixed",
-        "top-24", // Aumentado para ficar mais abaixo e não sobrepor conteúdos
-        "right-4",
-        "glass-container",
-        "p-4",
-        "space-y-4",
-        "z-[9999]" // Z-index extremamente alto para garantir que fique acima de tudo
-      );
+  if (!nav) {
+    console.error("Nav não encontrado!");
+    return;
+  }
 
-      // Certifique-se de que o header fique acima de tudo também
-      header.classList.add("z-[9999]");
+  // Garantir que o menu começa oculto em dispositivos móveis
+  if (window.innerWidth < 768) {
+    nav.classList.add("hidden");
+    nav.classList.remove("md:flex");
+  }
 
-      // Adicionar overlay para evitar cliques em elementos abaixo
-      const overlay = document.createElement("div");
-      overlay.classList.add("mobile-menu-overlay");
-      overlay.style.position = "fixed";
-      overlay.style.top = "0";
-      overlay.style.left = "0";
-      overlay.style.width = "100%";
-      overlay.style.height = "100%";
-      overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-      overlay.style.zIndex = "999";
-      overlay.style.backdropFilter = "blur(3px)";
-      document.body.appendChild(overlay);
+  // Função para mostrar o menu
+  function showMenu() {
+    console.log("Mostrando menu");
+    // Remover classes que escondem o menu
+    nav.classList.remove("hidden", "md:flex");
 
-      // Fechar menu ao clicar no overlay
-      overlay.addEventListener("click", closeMenu);
-    } else {
-      closeMenu();
+    // Adicionar classes para o estilo do menu mobile
+    nav.classList.add(
+      "flex",
+      "flex-col",
+      "fixed",
+      "top-24",
+      "right-4",
+      "glass-container",
+      "p-4",
+      "space-y-4",
+      "z-[9999]"
+    );
+
+    // Certificar que o header fica acima de tudo
+    header.classList.add("z-[9999]");
+
+    // Adicionar overlay para fechar o menu ao clicar fora
+    const overlay = document.createElement("div");
+    overlay.classList.add("mobile-menu-overlay");
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    overlay.style.zIndex = "999";
+    overlay.style.backdropFilter = "blur(3px)";
+    document.body.appendChild(overlay);
+
+    // Fechar menu ao clicar no overlay
+    overlay.addEventListener("click", hideMenu);
+  }
+
+  // Função para esconder o menu
+  function hideMenu() {
+    console.log("Escondendo menu");
+    // Adicionar classes que escondem o menu
+    nav.classList.add("hidden");
+
+    // Para desktop
+    if (window.innerWidth >= 768) {
+      nav.classList.add("md:flex");
     }
-  });
 
-  // Função para fechar o menu
-  function closeMenu() {
-    // Removendo a navegação mobile
-    nav.classList.add("hidden", "md:flex");
+    // Remover classes do estilo mobile
     nav.classList.remove(
       "flex",
       "flex-col",
@@ -488,17 +520,72 @@ function initMobileMenu() {
       "z-[9999]"
     );
 
-    // Remover overlay se existir
+    // Remover overlay
     const overlay = document.querySelector(".mobile-menu-overlay");
     if (overlay) {
       overlay.remove();
     }
   }
 
+  // Alternar o menu quando o botão for clicado
+  menuButton.addEventListener("click", function (e) {
+    console.log("Botão de menu clicado");
+    e.preventDefault();
+    if (nav.classList.contains("hidden")) {
+      showMenu();
+    } else {
+      hideMenu();
+    }
+  });
+
   // Fechar menu ao clicar em um link
   const navLinks = nav.querySelectorAll("a");
   navLinks.forEach((link) => {
-    link.addEventListener("click", closeMenu);
+    link.addEventListener("click", hideMenu);
+  });
+
+  // Adicionar efeito visual ao botão
+  menuButton.style.transition =
+    "transform 0.3s ease, background-color 0.3s ease";
+  menuButton.addEventListener("mouseover", function () {
+    this.style.transform = "scale(1.1)";
+  });
+  menuButton.addEventListener("mouseout", function () {
+    this.style.transform = "scale(1)";
+  });
+  menuButton.addEventListener("touchstart", function () {
+    this.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+  });
+  menuButton.addEventListener("touchend", function () {
+    this.style.backgroundColor = "transparent";
+  });
+
+  // Ajustar menu quando a janela for redimensionada
+  window.addEventListener("resize", function () {
+    if (window.innerWidth >= 768) {
+      nav.classList.remove(
+        "hidden",
+        "flex",
+        "flex-col",
+        "fixed",
+        "top-24",
+        "right-4",
+        "glass-container",
+        "p-4",
+        "space-y-4",
+        "z-[9999]"
+      );
+      nav.classList.add("md:flex");
+
+      // Remover overlay se existir
+      const overlay = document.querySelector(".mobile-menu-overlay");
+      if (overlay) {
+        overlay.remove();
+      }
+    } else if (!nav.classList.contains("flex")) {
+      nav.classList.add("hidden");
+      nav.classList.remove("md:flex");
+    }
   });
 }
 
