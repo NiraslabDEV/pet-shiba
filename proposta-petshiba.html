@@ -1150,6 +1150,140 @@
             Aceitar Proposta
           </button>
 
+          <div style="margin-top: 50px; text-align: center">
+            <h2 style="color: var(--primary); margin-bottom: 30px">
+              E Agora? Vamos Fechar?
+            </h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px">
+              Você já decidiu. Já sabe como quer pagar. Então a próxima etapa é
+              simples e empolgante:
+            </p>
+
+            <div
+              style="
+                background: linear-gradient(
+                  135deg,
+                  rgba(106, 17, 203, 0.1),
+                  rgba(37, 117, 252, 0.1)
+                );
+                padding: 30px;
+                border-radius: 12px;
+                margin-bottom: 30px;
+              "
+            >
+              <h3 style="color: var(--primary); margin-bottom: 20px">
+                O Que Acontece Agora
+              </h3>
+              <ul style="list-style: none; padding: 0; text-align: left">
+                <li
+                  style="
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 15px;
+                  "
+                >
+                  <span style="color: var(--accent); font-size: 1.5rem"
+                    >🤝</span
+                  >
+                  <div>
+                    <strong
+                      >Iniciaremos uma série de reuniões rápidas e
+                      objetivas</strong
+                    >
+                    <ul style="margin-top: 10px; padding-left: 20px">
+                      <li>Para alinhar imagens</li>
+                      <li>direção dos links</li>
+                      <li>textos e cores</li>
+                    </ul>
+                  </div>
+                </li>
+                <li
+                  style="
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 15px;
+                  "
+                >
+                  <span style="color: var(--accent); font-size: 1.5rem"
+                    >📝</span
+                  >
+                  <div>
+                    <strong
+                      >Tudo será documentado e redefinido com calma</strong
+                    >
+                    <p style="margin-top: 10px">
+                      Você terá voz ativa em cada detalhe
+                    </p>
+                  </div>
+                </li>
+                <li
+                  style="
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 15px;
+                  "
+                >
+                  <span style="color: var(--accent); font-size: 1.5rem"
+                    >⚡</span
+                  >
+                  <div>
+                    <strong
+                      >Prazo de 15 dias para finalização das
+                      atualizações</strong
+                    >
+                    <p style="margin-top: 10px">
+                      Enquanto isso, o site já estará no ar e funcionando
+                      normalmente
+                    </p>
+                  </div>
+                </li>
+                <li
+                  style="
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 15px;
+                  "
+                >
+                  <span style="color: var(--accent); font-size: 1.5rem"
+                    >🌐</span
+                  >
+                  <div>
+                    <strong>Implementação do domínio já vamos adquirir</strong>
+                    <ul style="margin-top: 10px; padding-left: 20px">
+                      <li>Configuração completa do domínio</li>
+                      <li>Direcionamento para o novo site</li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <p
+              style="
+                font-size: 1.2rem;
+                font-style: italic;
+                color: var(--primary);
+              "
+            >
+              Vamos juntos transformar essa presença digital em um verdadeiro
+              ponto de encontro com seu público.
+            </p>
+
+            <button
+              onclick="sendToWhatsApp()"
+              class="btn"
+              style="margin-top: 30px; width: 100%"
+              id="accept-button-2"
+              disabled
+            >
+              Aceitar Proposta
+            </button>
+          </div>
+
           <style>
             .radio-circle {
               width: 24px;
@@ -1287,11 +1421,23 @@
               document.getElementById("first-payment").innerHTML =
                 firstPaymentText.replace(/\n/g, "<br>");
 
+              // Habilita/desabilita todos os botões de aceitar
               document.getElementById("accept-button").disabled =
+                !selectedPayment || !selectedDomain;
+              document.getElementById("accept-button-2").disabled =
+                !selectedPayment || !selectedDomain;
+              document.getElementById("accept-button-3").disabled =
                 !selectedPayment || !selectedDomain;
             }
 
             function sendToWhatsApp() {
+              if (!selectedPayment || !selectedDomain) {
+                alert(
+                  "Por favor, selecione uma forma de pagamento e uma opção de domínio antes de aceitar a proposta."
+                );
+                return;
+              }
+
               const firstPaymentDate = new Date("2024-05-01");
 
               const message =
@@ -1415,11 +1561,91 @@
             </ul>
           </div>
 
-          <a
-            href="https://wa.me/5511941431850?text=Olá!%20Estou%20interessada%20na%20proposta%20do%20site%20Pet%20Shiba."
-            class="btn"
-            >Quero Aceitar Esta Proposta</a
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.1);
+              padding: 30px;
+              border-radius: 12px;
+              margin: 30px 0;
+            "
           >
+            <h3
+              style="
+                color: white;
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+                text-align: center;
+              "
+            >
+              🎁 Um Presente Especial para o Pet Shiba
+            </h3>
+            <p
+              style="font-size: 1.2rem; margin-bottom: 20px; text-align: center"
+            >
+              Sabemos que o Pet Shiba é mais que uma loja - é um sonho
+              realizado, um espaço de amor pelos pets. Por isso, preparamos uma
+              proposta especial que vai:
+            </p>
+            <ul style="text-align: center; list-style: none; padding: 0">
+              <li
+                style="
+                  margin-bottom: 15px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 10px;
+                "
+              >
+                <span style="color: var(--accent); font-size: 1.5rem">✨</span>
+                <span>Aumentar sua visibilidade em até 300%</span>
+              </li>
+              <li
+                style="
+                  margin-bottom: 15px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 10px;
+                "
+              >
+                <span style="color: var(--accent); font-size: 1.5rem">💎</span>
+                <span>Elevar a percepção de valor da sua marca</span>
+              </li>
+              <li
+                style="
+                  margin-bottom: 15px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 10px;
+                "
+              >
+                <span style="color: var(--accent); font-size: 1.5rem">🚀</span>
+                <span>Transformar visitantes em clientes fiéis</span>
+              </li>
+            </ul>
+            <p
+              style="
+                font-size: 1.2rem;
+                margin-top: 20px;
+                font-style: italic;
+                text-align: center;
+              "
+            >
+              Esta é nossa forma de retribuir todo o carinho e dedicação que
+              você tem com seus clientes.
+            </p>
+          </div>
+
+          <button
+            onclick="sendToWhatsApp()"
+            class="btn"
+            style="margin-top: 30px; width: 100%"
+            id="accept-button-3"
+            disabled
+          >
+            Quero Aceitar Esta Proposta
+          </button>
         </div>
       </section>
     </main>
