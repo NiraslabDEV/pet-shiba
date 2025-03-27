@@ -959,6 +959,9 @@ function initHeroSection() {
 
     // Inicializar partículas se a biblioteca estiver disponível
     initParticles();
+
+    // Adicionar interatividade ao logo da hero
+    initHeroLogoInteraction();
   }
 }
 
@@ -1173,4 +1176,106 @@ function initStickyHeader() {
   if (menuMobile) {
     menuMobile.style.zIndex = "9999";
   }
+
+  // Corrigir posição inicial do conteúdo para não haver sobreposição
+  // com a navbar, especialmente na seção hero
+  const heroSection = document.querySelector(".hero-section");
+  if (heroSection && header) {
+    heroSection.style.marginTop = `-${originalHeight}px`;
+    heroSection.style.paddingTop = `${originalHeight}px`;
+  }
+
+  // Garantir que as âncoras rolam para a posição correta considerando o header fixo
+  const anchors = document.querySelectorAll('a[href^="#"]');
+  anchors.forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href").substring(1);
+      const targetElement = document.getElementById(targetId);
+
+      if (targetElement) {
+        e.preventDefault();
+        const headerOffset = header ? header.offsetHeight : 0;
+        const targetPosition =
+          targetElement.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = targetPosition - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+    });
+  });
+}
+
+// Função para adicionar interatividade ao logo da hero
+function initHeroLogoInteraction() {
+  const heroLogo = document.querySelector(".hero-logo");
+  if (!heroLogo) return;
+
+  let interactionCount = 0;
+  let touchTimeout = null;
+  const maxInteractions = 10; // Número máximo de interações para efeito total
+
+  // Função para atualizar a aparência do logo baseado na contagem de interações
+  function updateLogoEffect() {
+    if (interactionCount > 0) {
+      heroLogo.classList.add("hero-logo-activated");
+
+      // Quanto mais interações, mais forte o efeito
+      const intensityFactor = Math.min(interactionCount / maxInteractions, 1);
+      heroLogo.style.filter = `drop-shadow(0 0 ${
+        30 + intensityFactor * 50
+      }px rgba(255, 140, 0, ${0.7 + intensityFactor * 0.3})) brightness(${
+        1.2 + intensityFactor * 0.8
+      })`;
+
+      // Reduzir gradualmente o efeito
+      setTimeout(() => {
+        interactionCount = Math.max(0, interactionCount - 1);
+        if (interactionCount === 0) {
+          heroLogo.classList.remove("hero-logo-activated");
+          heroLogo.style.filter = "";
+        } else {
+          updateLogoEffect();
+        }
+      }, 2000);
+    }
+  }
+
+  // Event listener para cliques (desktop)
+  heroLogo.addEventListener("click", function () {
+    interactionCount = Math.min(maxInteractions, interactionCount + 2);
+    updateLogoEffect();
+  });
+
+  // Event listener para mouse over (desktop)
+  heroLogo.addEventListener("mouseover", function () {
+    interactionCount = Math.min(maxInteractions, interactionCount + 1);
+    updateLogoEffect();
+  });
+
+  // Event listeners para toque (mobile)
+  heroLogo.addEventListener("touchstart", function (e) {
+    // Impedir comportamento padrão para evitar dupla ação em dispositivos híbridos
+    e.preventDefault();
+
+    // Iniciar contagem contínua enquanto toca
+    interactionCount = Math.min(maxInteractions, interactionCount + 2);
+    updateLogoEffect();
+
+    // Continuar aumentando o efeito enquanto mantém o toque
+    touchTimeout = setInterval(() => {
+      interactionCount = Math.min(maxInteractions, interactionCount + 1);
+      updateLogoEffect();
+    }, 500);
+  });
+
+  // Parar o efeito contínuo quando soltar o toque
+  heroLogo.addEventListener("touchend", function () {
+    if (touchTimeout) {
+      clearInterval(touchTimeout);
+      touchTimeout = null;
+    }
+  });
 }
