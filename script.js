@@ -786,6 +786,7 @@ function initAnalyticsModal() {
   const analyticsButton = document.getElementById("analytics-button");
   const analyticsModal = document.getElementById("analytics-modal");
   const closeButton = document.getElementById("close-analytics");
+  const resetButton = document.getElementById("reset-analytics");
 
   if (!analyticsButton || !analyticsModal) return;
 
@@ -802,6 +803,48 @@ function initAnalyticsModal() {
       showToast("Senha incorreta. Acesso negado.");
     }
   });
+
+  // Botão para resetar dados
+  if (resetButton) {
+    resetButton.addEventListener("click", function () {
+      if (
+        confirm(
+          "Tem certeza que deseja resetar todos os dados analisados? Esta ação não pode ser desfeita."
+        )
+      ) {
+        // Resetar dados
+        window.trackingData = {
+          clicks: {},
+          totalClicks: 0,
+          funnelSteps: {
+            step1: 0,
+            step2: 0,
+            step3: 0,
+            step4: 0,
+          },
+          sections: {
+            banner: 0,
+            servicos: 0,
+            sobre: 0,
+            agendamento: 0,
+            boutique: 0,
+            aniversario: 0,
+            contato: 0,
+            footer: 0,
+          },
+        };
+
+        // Salvar dados resetados
+        saveTrackingData();
+
+        // Atualizar display
+        updateAnalyticsDisplay();
+
+        // Mostrar mensagem de sucesso
+        showToast("Dados analisados resetados com sucesso!");
+      }
+    });
+  }
 
   // Botão para fechar modal
   if (closeButton) {
